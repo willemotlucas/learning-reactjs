@@ -1,20 +1,26 @@
 var React = require('react');
 var WeatherForm = require('WeatherForm');
 var WeatherMessage = require('WeatherMessage');
+var openWeatherMap = require('openWeatherMap');
 
 var Weather = React.createClass({
 
   getInitialState: function(){
     return {
-      temp: '34°C',
-      city: 'Blois'
+      temp: '',
+      city: ''
     };
   },
 
   handleGetWeather: function(city){
-    this.setState({
-      temp: "32°C",
-      city
+    var that = this;
+    openWeatherMap.getTemp(city).then(function(temp){
+      that.setState({
+        city,
+        temp
+      });
+    }, function(err){
+      alert('Error:', err);
     });
   },
 
