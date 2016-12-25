@@ -1,18 +1,14 @@
 var React = require('react');
 
-var WeatherMessage = React.createClass({
+// We use stateless functional component
+// and destructuring syntax directly in function parameters
 
-  render: function(){
-    var temp = this.props.temp;
-    var city = this.props.city;
-
-    return (      
-      <div>
-        <p>It's {temp}°C in {city}</p>
-      </div>
-    );
-  }
-
-});
+var WeatherMessage = ({temp, city}) => {
+  return (      
+    <div>
+      <p>It's {temp}°C in {city}</p>
+    </div>
+  );
+}
 
 module.exports = WeatherMessage;

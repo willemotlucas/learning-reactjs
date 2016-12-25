@@ -1,13 +1,11 @@
 var React = require('react');
 
-var Examples = React.createClass({
+// We use a stateless functional component
 
-  render: function(){
+var Examples = (props) => {
     return (
       <h3>Examples page</h3>
     );
-  }
-
-});
+}
 
 module.exports = Examples;
