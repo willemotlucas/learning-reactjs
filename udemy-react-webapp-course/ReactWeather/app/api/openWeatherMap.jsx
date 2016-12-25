@@ -1,7 +1,5 @@
 var axios = require('axios');
 
-// b8e6e509b96f1b400e3937090bdf3dfe
-
 const OPEN_WEATHER_MAP_URL = 'http://api.openweathermap.org/data/2.5/weather?appid=b8e6e509b96f1b400e3937090bdf3dfe&units=metric';
 
 module.exports = {
@@ -15,8 +13,9 @@ module.exports = {
       } else {
         return response.data.main.temp;
       }
-    }, function(response){
-      throw new Error(response.data.message);
+    }, function(err){
+      //throw new Error(err.response.data.message);
+      throw new Error("An error occured. The city might have not been found.");
     });
   }
 }

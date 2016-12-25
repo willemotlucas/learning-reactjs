@@ -6,8 +6,7 @@ var WeatherForm = React.createClass({
     event.preventDefault();
     var cityRef = this.refs.city;
     var city = cityRef.value;
-    console.log('City: ' + cityRef);
-
+    
     if(typeof city === 'string' && city.length > 0){
       cityRef.value = '';
       this.props.onGetWeather(city);
