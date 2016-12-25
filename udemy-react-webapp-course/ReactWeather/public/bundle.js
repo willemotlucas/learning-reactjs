@@ -24948,32 +24948,50 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      temp: '',
-	      city: ''
+	      isLoading: false
 	    };
 	  },
 
 	  handleGetWeather: function handleGetWeather(city) {
 	    var that = this;
+	    this.setState({ isLoading: true });
+
 	    openWeatherMap.getTemp(city).then(function (temp) {
 	      that.setState({
 	        city: city,
-	        temp: temp
+	        temp: temp,
+	        isLoading: false
 	      });
 	    }, function (err) {
+	      this.setState({ isLoading: false });
 	      alert('Error:', err);
 	    });
 	  },
 
 	  render: function render() {
-	    var temp = this.state.temp;
-	    var city = this.state.city;
+	    var _state = this.state,
+	        isLoading = _state.isLoading,
+	        temp = _state.temp,
+	        city = _state.city;
+
+
+	    var renderMessage = function renderMessage() {
+	      if (isLoading) {
+	        return React.createElement(
+	          'h3',
+	          null,
+	          'Fetching weather...'
+	        );
+	      } else if (temp && location) {
+	        return React.createElement(WeatherMessage, { city: city, temp: temp });
+	      }
+	    };
 
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(WeatherForm, { onGetWeather: this.handleGetWeather }),
-	      React.createElement(WeatherMessage, { city: city, temp: temp })
+	      renderMessage()
 	    );
 	  }
 
@@ -25042,17 +25060,16 @@
 	    var temp = this.props.temp;
 	    var city = this.props.city;
 
-	    // Initialize message to display
-	    var message = '';
-	    if (temp && city.length > 0) message = 'It\'s ' + temp + '\xB0C in ' + city + '!';
-
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(
 	        'p',
 	        null,
-	        message
+	        'It\'s ',
+	        temp,
+	        '\xB0C in ',
+	        city
 	      )
 	    );
 	  }
